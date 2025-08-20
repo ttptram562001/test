@@ -5,7 +5,7 @@ from utils.response import response_success
 
 app = get_app()
 
-route_str: str = "/api/ui001"
+route_str: str = "/api/ui002"
 healthcheck_router = APIRouter(prefix=route_str, tags=["Healthcheck"])
 
 

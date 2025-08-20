@@ -19,8 +19,8 @@ def get_app() -> FastAPI:
         (SystemException, system_exception_handler),
     ]
 
-    for exc, handler in __EXCEPTION_HANDLERS__:
-        app.add_exception_handler(exc, handler)
+    # for exc, handler in __EXCEPTION_HANDLERS__:
+    #     app.add_exception_handler(exc, handler)
 
     # add middlewares
     __MIDDLEWARES__ = [
@@ -29,8 +29,8 @@ def get_app() -> FastAPI:
         AuthMiddleware,
     ]
 
-    for middleware in __MIDDLEWARES__.__reversed__():
-        app.add_middleware(middleware)
+    # for middleware in __MIDDLEWARES__.__reversed__():
+    #     app.add_middleware(middleware)
 
     app.add_middleware(
         CORSMiddleware,
