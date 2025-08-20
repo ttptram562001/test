@@ -6,14 +6,14 @@ from utils.response import response_success
 app = get_app()
 
 route_str: str = "/api/ui002"
-healthcheck_router = APIRouter(prefix=route_str, tags=["Healthcheck"])
+healthcheck_router2 = APIRouter(prefix=route_str, tags=["Healthcheck"])
 
 
-@healthcheck_router.get("/")
+@healthcheck_router2.get("/")
 def health_check():    
     return response_success("Health check is good")
 
 
 async def main(req: func.HttpRequest, context: func.Context) -> func.HttpResponse:
-    app.include_router(healthcheck_router)
+    app.include_router(healthcheck_router2)
     return await func.AsgiMiddleware(app).handle_async(req, context)
