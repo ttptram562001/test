@@ -17,8 +17,6 @@ def health_check():
     return response_success("Health check is good")
 
 
-
-
 async def main(req: func.HttpRequest, context: func.Context) -> func.HttpResponse:
     app.include_router(healthcheck_router)
     return await func.AsgiMiddleware(app).handle_async(req, context)
