@@ -1,0 +1,20 @@
+{
+    "scriptFile": "controller.py",
+    "bindings": [
+        {
+            "authLevel": "anonymous",
+            "type": "httpTrigger",
+            "direction": "in",
+            "name": "req",
+            "methods": [
+                "get"
+            ],
+            "route": "ui002/{*route}"
+        },
+        {
+            "type": "http",
+            "direction": "out",
+            "name": "$return"
+        }
+    ]
+}
