@@ -7,7 +7,6 @@ on:
       - develop 
 
 env:
-  AZURE_FUNCTIONAPP_NAME: 'oktatest-func'
   PYTHON_VERSION: '3.10'
   PACKAGE_NAME: '.'
 
@@ -18,32 +17,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-      - name: Install dependencies
-        run: |
-          python -m venv .venv
-          source .venv/bin/activate
-          pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Install Azure Functions Core Tools
-        run: |
-          npm install -g azure-functions-core-tools@4 --unsafe-perm true
-          func --version
-
-      - name: Deploy to Azure Function App
-        uses: azure/functions-action@v1
-        with:
-          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          package: ${{ env.PACKAGE_NAME }}
-          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
-          sku: flexconsumption
-          scm-do-build-during-deployment: true
-          enable-oryx-build: true
+    - name: 'Deploy to Azure Functions'
+      id: deploy-to-function
+      uses: Azure/functions-action@v1
+      with:
+        # Tên Function App của bạn trên Azure
+        app-name: 'oktatest-func'
+        
+        # Trỏ đến thư mục gốc của repo để đóng gói.
+        package: '.'
+        
+        # "Chìa khóa" để đăng nhập vào Azure
+        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+        
+        # Cấu hình đặc biệt cho gói Flex Consumption
+        sku: flexconsumption
+        
+        # Yêu cầu Azure tự build ứng dụng sau khi nhận code
+        remote-build: true
